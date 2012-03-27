@@ -6,7 +6,7 @@ use Test::More;
 use Test::Mojo;
 use Mojolicious::Lite;
 
-use Test::More tests => 41;
+use Test::More tests => 45;
 
 plugin 'Dispatch2Directory' => {document_root => 't/public_html'};
 
@@ -55,5 +55,9 @@ $t->get_ok('/hoge')
     ->content_type_is('text/html;charset=UTF-8')
     ->status_is(200)
     ->content_is(qq{hoge});
+$t->get_ok('/dynamic.txt')
+    ->content_type_is('text/plain')
+    ->status_is(200)
+    ->content_like(qr{dynamic \d+\n});
 
 __END__
