@@ -166,6 +166,8 @@ The request above renders following file.
 
 =back
 
+=over
+
 =item Static file
 
     GET /path/to/image.png
