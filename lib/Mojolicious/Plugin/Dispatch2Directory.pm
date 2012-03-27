@@ -151,9 +151,12 @@ Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
 
 =head1 DESCRIPTION
 
-This is a plugin for dispatching paths to directory hierarchie and make the
-paths to static root and renderer root together. This behavior is similar to
-apache with PHP scripts.
+This is a plugin for dispatching paths to directory hierarchie.
+
+Given document_root path would be assigned to both static and renderer roots.
+With this plugin, you can enhance static pages in directory hierarchie
+by adding extra extension such as .html.ep and can embed dynamic contents
+into them as if PHPers do or SSI fans do.
 
 =over
 
@@ -161,7 +164,7 @@ apache with PHP scripts.
 
     GET /path/to/file.html
 
-The request above renders following file.
+The request above results the following file to render.
 
     $app->home->rel_dir('public_html/path/to/file.html.ep')
 
@@ -173,7 +176,7 @@ The request above renders following file.
 
     GET /path/to/image.png
 
-The request above renders following file.
+The request above results the following file to serve.
 
     $app->home->rel_dir('public_html/path/to/image.png')
 
