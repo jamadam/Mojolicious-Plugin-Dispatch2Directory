@@ -1,0 +1,3 @@
+index.html
+<a href="./dir1/index.html">./dir1/index.html</a>
+<%= time() %>

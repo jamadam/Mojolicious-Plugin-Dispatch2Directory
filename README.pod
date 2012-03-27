@@ -1,0 +1,89 @@
+=head1 NAME
+
+Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
+
+=head1 SYNOPSIS
+
+	plugin Dispatch2Directory => {
+        document_root => 'htdocs',
+        indexes => 1,
+    };
+
+=head1 DESCRIPTION
+
+This is a plugin for dispatching paths to directory hierarchie and make the
+paths to static root and renderer root together. This behavior is similar to
+apache with PHP scripts.
+
+    GET /path/to/file.html
+
+The request above renders following file.
+
+    $app->home->rel_dir('public_html/path/to/file.html.ep')
+
+    GET /path/to/image.png
+
+The request above renders following file.
+
+    $app->home->rel_dir('public_html/path/to/image.png')
+
+Also this plugin provides an ability to serve directory index page like apache's
+mod_autoindex.
+
+=head1 OPTIONS
+
+=head2 document_root => String
+
+This option sets root directory for templates and static files. Following
+example is default setting.
+
+	plugin Dispatch2Directory => {
+        document_root => app->home->rel_dir('public_html')
+    };
+
+=head2 default_file => String
+
+This option sets default file name for searching file in directory when
+the request path doesn't ended with file name. 
+
+	plugin Dispatch2Directory => {
+        default_file => 'index.html',
+    };
+
+=head2 indexes => Bool
+
+This option emulates apache's indexes option. When the value is 1,
+the server generates file list page for directory access.
+
+	plugin Dispatch2Directory => {
+        indexes => 1,
+    };
+
+=head2 static_dir => String
+
+This specifies the static asset path for file list page. Defaults to 'static'.
+
+=head1 METHODS
+
+=head2 $instance->register($app, $options)
+
+This method internally called.
+
+=head1 SEE ALSO
+
+L<Mojolicious>
+
+L<http://en.wikipedia.org/wiki/Ainu_languages>
+
+=head1 AUTHOR
+
+Sugama Keita, E<lt>sugama@jamadam.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2011 by Sugama Keita.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=cut

@@ -1,0 +1,18 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+use File::Basename 'dirname';
+use File::Spec;
+use lib join '/', File::Spec->splitdir(dirname(__FILE__)), '.', 'lib';
+	
+	plugin Dispatch2Directory => {
+        document_root => 'lib',
+        indexes => 1,
+    };
+	
+	app->secret(time());
+	
+	get '/hoge' => sub {
+		$_[0]->render_text('hoge');
+	};
+	
+	app->start;
