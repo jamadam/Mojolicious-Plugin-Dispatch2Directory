@@ -145,7 +145,7 @@ Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
 =head1 SYNOPSIS
 
     plugin Dispatch2Directory => {
-        document_root => 'htdocs',
+        document_root => 'public_html',
         indexes => 1,
     };
 
@@ -196,7 +196,7 @@ example is default setting.
 =head2 default_file => String
 
 This option sets default file name for searching file in directory when
-the request path doesn't ended with file name. 
+the request path doesn't ended with /. 
 
     plugin Dispatch2Directory => {
         default_file => 'index.html',
@@ -219,7 +219,7 @@ This specifies the static asset path for file list page. Defaults to 'static'.
 
 =head2 $instance->register($app, $options)
 
-This method internally called.
+This method is internally called.
 
 =head1 SEE ALSO
 
