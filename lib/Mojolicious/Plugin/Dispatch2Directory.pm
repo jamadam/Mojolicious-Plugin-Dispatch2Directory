@@ -154,11 +154,15 @@ This is a plugin for dispatching paths to directory hierarchie and make the
 paths to static root and renderer root together. This behavior is similar to
 apache with PHP scripts.
 
+=item Template parse
+
     GET /path/to/file.html
 
 The request above renders following file.
 
     $app->home->rel_dir('public_html/path/to/file.html.ep')
+
+=item Static file
 
     GET /path/to/image.png
 
