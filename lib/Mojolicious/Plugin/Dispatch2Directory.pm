@@ -143,7 +143,7 @@ Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
 
 =head1 SYNOPSIS
 
-	plugin Dispatch2Directory => {
+    plugin Dispatch2Directory => {
         document_root => 'htdocs',
         indexes => 1,
     };
@@ -176,7 +176,7 @@ mod_autoindex.
 This option sets root directory for templates and static files. Following
 example is default setting.
 
-	plugin Dispatch2Directory => {
+    plugin Dispatch2Directory => {
         document_root => app->home->rel_dir('public_html')
     };
 
@@ -185,7 +185,7 @@ example is default setting.
 This option sets default file name for searching file in directory when
 the request path doesn't ended with file name. 
 
-	plugin Dispatch2Directory => {
+    plugin Dispatch2Directory => {
         default_file => 'index.html',
     };
 
@@ -194,7 +194,7 @@ the request path doesn't ended with file name.
 This option emulates apache's indexes option. When the value is 1,
 the server generates file list page for directory access.
 
-	plugin Dispatch2Directory => {
+    plugin Dispatch2Directory => {
         indexes => 1,
     };
 
