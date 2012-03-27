@@ -205,7 +205,8 @@ the request path doesn't ended with /.
 =head2 indexes => Bool
 
 This option emulates apache's indexes option. When the value is 1,
-the server generates file list page for directory access.
+the server generates file list page for directory access. The file list appears
+when the default_file resulted 404.
 
     plugin Dispatch2Directory => {
         indexes => 1,
