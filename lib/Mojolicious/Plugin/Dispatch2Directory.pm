@@ -30,13 +30,14 @@ our $VERSION = '0.01';
             $c->req->url->path($path);
             
             ### set default route
-            if (! $default_route_set++) {
+            if (! $default_route_set) {
                 $handler_re = '(?:'. join('|', keys %{$c->app->renderer->handlers}). ')';
                 $c->app->routes->route('(*template).(*format)')->to(cb => sub {
                     my $c = shift;
                     $c->render;
                     $c->res->code || $c->render_not_found;
                 });
+                $default_route_set = 1;
             }
             
             ### 403 for direct access to template file names
