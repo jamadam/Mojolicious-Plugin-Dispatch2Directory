@@ -154,6 +154,8 @@ This is a plugin for dispatching paths to directory hierarchie and make the
 paths to static root and renderer root together. This behavior is similar to
 apache with PHP scripts.
 
+=over
+
 =item Template parse
 
     GET /path/to/file.html
@@ -162,6 +164,8 @@ The request above renders following file.
 
     $app->home->rel_dir('public_html/path/to/file.html.ep')
 
+=back
+
 =item Static file
 
     GET /path/to/image.png
@@ -169,6 +173,8 @@ The request above renders following file.
 The request above renders following file.
 
     $app->home->rel_dir('public_html/path/to/image.png')
+
+=back
 
 Also this plugin provides an ability to serve directory index page like apache's
 mod_autoindex.
