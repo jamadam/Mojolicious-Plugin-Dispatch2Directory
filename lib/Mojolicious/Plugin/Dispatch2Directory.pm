@@ -20,18 +20,18 @@ our $VERSION = '0.01';
         my $default_route_set;
         my $handler_re;
 
-        ### Auto-fill path
         $app->hook('around_dispatch' => sub {
             my ($next, $c) = @_;
             
-            my $path = $c->req->url->path || '/';
-            my $trailing_slash = substr($path, -1, 1) eq '/';
+            ### Auto-fill path
+            my $path = my $path_org = $c->req->url->path || '/';
             $path =~ s{/$}{/$options->{default_file}};
             $c->req->url->path($path);
             
             ### set default route
             if (! $default_route_set) {
-                $handler_re = '(?:'. join('|', keys %{$c->app->renderer->handlers}). ')';
+                $handler_re =
+                    '(?:'. join('|', keys %{$c->app->renderer->handlers}). ')';
                 $c->app->routes->route('(*template).(*format)')->to(cb => sub {
                     my $c = shift;
                     $c->render;
@@ -49,9 +49,12 @@ our $VERSION = '0.01';
             
             $next->();
             
-            if ($options->{indexes} && $trailing_slash && $c->res->code == 404) {
+            ### auto index
+            if ($options->{indexes} &&
+                                $path_org =~ qr{/$} && $c->res->code == 404) {
                 $c->tx->res(Mojo::Message::Response->new);
-                $c->render_text(_indexes($options->{document_root}, dirname($path), $options->{static_dir}));
+                $c->render_text(_indexes($options->{document_root},
+                                        dirname($path), $options->{static_dir}));
                 $c->res->code(200);
             }
         });
