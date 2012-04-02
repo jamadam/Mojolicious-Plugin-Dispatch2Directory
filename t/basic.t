@@ -15,7 +15,11 @@ get '/hoge' => sub {
 };
 
 my $t = Test::Mojo->new;
-$t->get_ok('/nonexists.html')->status_is(404);
+$t->get_ok('/dir1')
+    ->status_is(301)
+    ->header_like(Location => qr{/dir1/$});
+$t->get_ok('/nonexists.html')
+    ->status_is(404);
 $t->get_ok('/')
     ->status_is(200)
     ->content_type_is('text/html;charset=UTF-8')

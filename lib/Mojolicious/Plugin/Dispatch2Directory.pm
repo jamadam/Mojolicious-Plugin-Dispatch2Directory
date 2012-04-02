@@ -52,13 +52,24 @@ our $VERSION = '0.01';
             
             $next->();
             
-            ### auto index
-            if ($options->{indexes} &&
-                                $path_org =~ qr{/$} && $c->res->code == 404) {
-                $c->tx->res(Mojo::Message::Response->new);
-                $c->render_text(_indexes($options->{document_root},
+            if ($c->res->code == 404) {
+                if ($path_org !~ qr{/$}) {
+                    ### redirect to directory like apache
+                    if (-d File::Spec->catfile($options->{document_root},
+                                                                $path_org)) {
+                        $c->tx->res(Mojo::Message::Response->new);
+                        $c->redirect_to($path. '/');
+                        $c->tx->res->code(301);
+                    }
+                } else {
+                    ### auto index
+                    if ($options->{indexes}) {
+                        $c->tx->res(Mojo::Message::Response->new);
+                        $c->render_text(_indexes($options->{document_root},
                                         dirname($path), $options->{static_dir}));
-                $c->res->code(200);
+                        $c->res->code(200);
+                    }
+                }
             }
         });
     }
