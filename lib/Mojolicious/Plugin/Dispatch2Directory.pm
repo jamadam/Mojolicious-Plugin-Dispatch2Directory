@@ -24,9 +24,12 @@ our $VERSION = '0.01';
             my ($next, $c) = @_;
             
             ### Auto-fill path
-            my $path = my $path_org = $c->req->url->path || '/';
-            $path =~ s{/$}{/$options->{default_file}};
-            $c->req->url->path($path);
+            my $path = $c->req->url->path;
+            my $path_org = $path->clone;
+            if ($path->trailing_slash || ! @{$path->parts}) {
+                push(@{$path->parts}, $options->{default_file});
+                $path->trailing_slash(0);
+            }
             
             ### set default route
             if (! $default_route_set) {
