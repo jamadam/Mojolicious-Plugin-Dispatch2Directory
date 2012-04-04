@@ -6,7 +6,7 @@ use Test::More;
 use Test::Mojo;
 use Mojolicious::Lite;
 
-use Test::More tests => 45;
+use Test::More tests => 48;
 
 plugin 'Dispatch2Directory' => {document_root => 't/public_html'};
 
