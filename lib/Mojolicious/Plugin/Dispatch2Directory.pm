@@ -13,6 +13,7 @@ our $VERSION = '0.01';
         $options->{default_file}    ||= 'index.html';
         $options->{static_dir}      ||= 'static';
         $options->{document_root}   ||= $app->home->rel_dir('public_html');
+        $options->{handler}         ||= 'ep';
         
         $app->static->paths([$options->{document_root}, _asset()]);
         $app->renderer->paths([$options->{document_root}]);
@@ -37,7 +38,7 @@ our $VERSION = '0.01';
                     '(?:'. join('|', keys %{$c->app->renderer->handlers}). ')';
                 $c->app->routes->route('(*template).(*format)')->to(cb => sub {
                     my $c = shift;
-                    $c->render;
+                    $c->render(handler => $options->{handler});
                     $c->res->code || $c->render_not_found;
                 });
                 $default_route_set = 1;
@@ -52,9 +53,7 @@ our $VERSION = '0.01';
             
             $next->();
             
-            my $code = $c->res->code;
-            
-            if ($code && $code == 404) {
+            if ($c->res->code == 404) {
                 if ($path_org !~ qr{/$}) {
                     ### redirect to directory like apache
                     if (-d File::Spec->catfile($options->{document_root},
@@ -164,8 +163,9 @@ Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
 =head1 SYNOPSIS
 
     plugin Dispatch2Directory => {
-        document_root => 'public_html',
-        indexes => 1,
+        document_root   => 'public_html',
+        handler         => 'ep',
+        indexes         => 1,
     };
 
 =head1 DESCRIPTION
@@ -215,6 +215,14 @@ example is default setting.
 
     plugin Dispatch2Directory => {
         document_root => app->home->rel_dir('public_html')
+    };
+
+=head2 handler => String
+
+This option overrides auto detection.
+
+    plugin Dispatch2Directory => {
+        handler => 'ep'
     };
 
 =head2 default_file => String
