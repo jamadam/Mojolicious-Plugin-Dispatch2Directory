@@ -53,7 +53,9 @@ our $VERSION = '0.01';
             
             $next->();
             
-            if ($c->res->code == 404) {
+            my $code = $c->res->code;
+            
+            if ($code && $code == 404) {
                 if ($path_org !~ qr{/$}) {
                     ### redirect to directory like apache
                     if (-d File::Spec->catfile($options->{document_root},
