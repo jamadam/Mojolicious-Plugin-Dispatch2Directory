@@ -14,6 +14,11 @@ use Encode::Guess;
 	
     {
         $ENV{MOJO_MODE} = 'production';
+		
+		
+		open(my $file, "> $FindBin::Bin/public_html_index/日本語.html");
+		close($file);
+
         my $t = Test::Mojo->new('TestCase1');
         $t->get_ok('/')
 			->status_is(200)
@@ -40,6 +45,8 @@ use Encode::Guess;
 			->content_like(qr{\@charset "UTF\-8"});
 		$t->get_ok('/some_dir/not_exists.html')
 			->status_is(404);
+		
+		unlink("$FindBin::Bin/public_html_index/日本語.html");
     }
 		{
 			package TestCase1;
