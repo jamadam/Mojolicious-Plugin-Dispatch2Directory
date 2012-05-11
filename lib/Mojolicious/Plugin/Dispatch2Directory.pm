@@ -11,7 +11,6 @@ our $VERSION = '0.01';
         my ($self, $app, $options) = @_;
         
         $options->{default_file}    ||= 'index.html';
-        $options->{static_dir}      ||= 'static';
         $options->{document_root}   ||= $app->home->rel_dir('public_html');
         $options->{handler}         ||= 'ep';
         
@@ -140,10 +139,6 @@ the request path doesn't ended with /.
     plugin Dispatch2Directory => {
         default_file => 'index.html',
     };
-
-=head2 static_dir => String
-
-This specifies the static asset path for file list page. Defaults to 'static'.
 
 =head1 METHODS
 
