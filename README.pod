@@ -5,8 +5,8 @@ Mojolicious::Plugin::Dispatch2Directory - Dispatch to directory Hierarchie
 =head1 SYNOPSIS
 
     plugin Dispatch2Directory => {
-        document_root => 'public_html',
-        indexes => 1,
+        document_root   => 'public_html',
+        handler         => 'ep',
     };
 
 =head1 DESCRIPTION
@@ -44,9 +44,6 @@ The request above results the following file to serve.
 
 =back
 
-Also this plugin provides an ability to serve directory index page like apache's
-mod_autoindex.
-
 =head1 OPTIONS
 
 =head2 document_root => String
@@ -58,6 +55,14 @@ example is default setting.
         document_root => app->home->rel_dir('public_html')
     };
 
+=head2 handler => String
+
+This option overrides auto detection.
+
+    plugin Dispatch2Directory => {
+        handler => 'ep'
+    };
+
 =head2 default_file => String
 
 This option sets default file name for searching file in directory when
@@ -66,20 +71,6 @@ the request path doesn't ended with /.
     plugin Dispatch2Directory => {
         default_file => 'index.html',
     };
-
-=head2 indexes => Bool
-
-This option emulates apache's indexes option. When the value is 1,
-the server generates file list page for directory access. The file list appears
-when the default_file resulted 404.
-
-    plugin Dispatch2Directory => {
-        indexes => 1,
-    };
-
-=head2 static_dir => String
-
-This specifies the static asset path for file list page. Defaults to 'static'.
 
 =head1 METHODS
 
